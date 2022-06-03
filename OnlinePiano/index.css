@@ -1,0 +1,217 @@
+* {
+    margin : 0;
+    padding: 0;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    font-weight: lighter;
+
+}
+
+#root {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    background-color: gray;
+}
+
+#topContainer {
+
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+}
+
+#controlsDiv {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 85%;
+}
+
+#octaveControls {
+    justify-self: flex-start;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 7vw;
+    margin-bottom: 2px;
+    
+}
+
+#instrumentControls {
+    display: flex;
+    flex-direction: row;
+    width: 12vw;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.controlButtons  {
+
+    display: flex;
+    position: relative;
+    padding: 1vw;
+    border-radius: 0.5vw;
+    justify-content: center;
+    align-items: center;
+    transition-duration: 0.2s;
+    transition-timing-function: linear;
+    color: white;
+
+}
+
+.controlButtons > p {
+    position: absolute;
+    font-size: 1vw;
+}
+
+
+
+.controlButtons:hover{
+    background-color: rgba(200, 200, 200, 0.5);
+    cursor: pointer;
+    color: white;
+}
+
+.highlightedControlButton{
+    background-color: rgba(200, 200, 200, 0.5);
+    cursor: pointer;
+    color: white;
+}
+
+
+#octaveText {
+    font-size: 1.5vw;
+    color: white;
+}
+
+#instrumentName {
+    font-size: 1.2vw;
+    color: white
+}
+
+#keyboardContainer {
+    border: 1px solid black;
+    width: 85%;
+    padding-top: 40%;
+    position: relative;
+}
+
+#adContainer {
+    z-index: 99;
+    border: 1px solid red;
+    width: 85%;
+    position: fixed;
+    bottom: 0;
+}
+
+#bannerAd { width: 320px; height: 100px; }
+@media(min-width: 500px) { #bannerAd { width: 468px; height: 60px; } }
+@media(min-width: 800px) { #bannerAd { width: 728px; height: 90px; }  }
+.whiteKey {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    position:absolute;
+    top: 0;
+    height: 100%;
+    width: 9.09%;
+    border: 1px solid black;
+    background-color: white;
+    font-size: 2vw;
+    z-index: 1;
+    margin-top: -1px;
+    margin-left: -1px;
+}
+
+.blackKey {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    position: absolute;
+    top: 0;
+    height: 70%;
+    width: 6%;
+    border: 1px solid black;
+    background-color: black;
+    font-size: 2vw;
+    color: white;
+    z-index: 2;
+    margin-top: -1px;
+    margin-left: -1px;
+
+}
+
+.highlighted {
+    background-color: rgb(28, 115, 196);
+    border: 1px solid black;
+    color: white;
+}
+
+#C {
+    left: 0;
+}
+#D {
+    left: calc(9.09%*1);
+}
+#E {
+    left: calc(9.09%*2);
+}
+#F {
+    left: calc(9.09%*3);
+}
+#G {
+    left: calc(9.09%*4);
+}
+#A {
+    left: calc(9.09%*5);
+}
+#B {
+    left: calc(9.09%*6);
+}
+#C1 {
+    left: calc(9.09%*7);
+}
+#D1 {
+    left: calc(9.09%*8);
+}
+#E1 {
+    left: calc(9.09%*9);
+}
+#F1 {
+    left: calc(9.09%*10);
+}
+
+#Db {
+    left: 6%;
+}
+#Eb {
+    left: 15%;
+}
+#Gb {
+    left: 33.3%;
+}
+#Ab {
+    left: 42.4%;
+}
+#Bb {
+    left: 51.5%;
+}
+#Db1 {
+    left: 69.5%;
+}
+#Eb1 {
+    left: 78.6%;
+}
