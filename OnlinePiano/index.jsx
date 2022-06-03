@@ -5,6 +5,7 @@ let obj = {
   preload: true,
   sprite: {},
   onload: function () {
+    hideLoadingScreen();
     addEventListener("keydown", keyDownFunc);
     addEventListener("keyup", keyUpFunc);
   }
@@ -112,6 +113,7 @@ let octave = 3;
 let downKeys = [];
 let allSoundsPlaying = [];
 
+
 const keyDownFunc = (ev) => {
   if (ev.repeat) return;
   const key1 = getKeyClicked(ev.key);
@@ -193,10 +195,14 @@ function App() {
 
 function KeyBoard() {
   return (
-    <div id="keyboardContainer">
+    <div id="keyboardContainer" >
       {notesArray.map((note) =>
         note[1] === "b" ? <BlackKey id={note} /> : <WhiteKey id={note} />
       )}
+
+      <div id="loadingDiv" className="loading">
+        <h1>Loading sound...</h1>
+      </div>
     </div>
   );
 }
@@ -374,6 +380,7 @@ function refreshInstrument() {
   sprite._src = instruments[instrumentIndex].src;
   Notedelay = instruments[instrumentIndex].delay;
 
+  showLoadingScreen();
   removeEventListener("keydown", keyDownFunc);
   removeEventListener("keyup", keyUpFunc);
   sprite.load();
@@ -396,6 +403,19 @@ function nextInstrument() {
     instrumentIndex = 0;
   }
   refreshInstrument();
+
+}
+
+function hideLoadingScreen()  {
+  document.getElementById("loadingDiv").classList.remove("loading");
+  document.getElementById("loadingDiv").classList.add("noLoading");
+}
+
+function showLoadingScreen() {
+  if(document.getElementById("loadingDiv")) {
+    document.getElementById("loadingDiv").classList.add("loading");
+    document.getElementById("loadingDiv").classList.remove("noLoading");
+  };
 }
 
 ReactDOM.render(<App />, rootElement);

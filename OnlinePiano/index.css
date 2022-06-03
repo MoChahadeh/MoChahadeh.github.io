@@ -30,7 +30,10 @@
     justify-content: center;
     flex-direction: column;
 
+
 }
+
+
 
 #controlsDiv {
 
@@ -109,17 +112,6 @@
     position: relative;
 }
 
-#adContainer {
-    z-index: 99;
-    border: 1px solid red;
-    width: 85%;
-    position: fixed;
-    bottom: 0;
-}
-
-#bannerAd { width: 320px; height: 100px; }
-@media(min-width: 500px) { #bannerAd { width: 468px; height: 60px; } }
-@media(min-width: 800px) { #bannerAd { width: 728px; height: 90px; }  }
 .whiteKey {
     display: flex;
     justify-content: center;
@@ -214,4 +206,22 @@
 }
 #Eb1 {
     left: 78.6%;
+}
+
+.noLoading {
+    display: none;
+}
+
+.loading {
+    position: absolute;
+    z-index: 3;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
