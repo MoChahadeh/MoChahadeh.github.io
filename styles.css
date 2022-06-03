@@ -1,0 +1,230 @@
+* {
+	margin: 0;
+	padding: 0;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+	font-weight: lighter;
+	/* border: 1px solid red; */
+}
+
+body {
+    background-color: var(--dark);
+}
+
+#navBar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	padding: 11px 30px;
+}
+
+#mcLogo {
+	font-size: 30px;
+	color: white;
+	text-decoration: none;
+	text-shadow: 1px 1px 7px var(--dark);
+}
+
+#topCardBackgroundImage {
+	height: 100%;
+
+	background-image: url("images/bg.jpg");
+
+	background-size: cover;
+	filter: blur(6px) grayscale(30%);
+	opacity:100%;
+	background-position: center;
+}
+
+
+#topCardTextContainer {
+	height: 250px;
+	position: absolute;
+	font-size: 0;
+	top: 25%;
+	left: 3.5%;
+	width: 75%;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: flex-start;
+}
+
+#exploreDiv {
+	position: absolute;
+	bottom: 20px;
+	right: 50%;
+	left: 50%;
+	align-self: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	color: white;
+	-o-animation-delay: 2s;
+	animation-delay: 2s;
+	--animation-delay: 2s;
+}
+
+#exploreText {
+	font-weight: 200;
+}
+
+#arrowDown {
+	margin-top: -8px;
+}
+
+#topCardTextContainer {
+	color: white;
+	text-shadow: 0px 0px 19px var(--dark);
+}
+
+#nameText {
+	font-size: 45px;
+	font-weight: 500;
+}
+
+#profText {
+	font-weight: 350;
+	margin-top: -10px;
+}
+
+#socialContainer > a {
+	color: white;
+
+	font-size: 27px;
+	margin: 5px;
+	margin-right: 25px;
+	display: inline-block;
+}
+
+.hoverable {
+	display: inline-block;
+	transition: all 0.3s ease-in-out;
+}
+
+.hoverable:hover {
+	transform: scale(1.1);
+	color: rgba(220, 220, 220, 1);
+}
+
+
+.myCards {
+	height: 100vh;
+	width: 100vw;
+    background-color: var(--dark);
+}
+
+#card2 {
+	display: flex;
+	flex-direction: column;
+}
+
+#myProjectsHeading {
+    color: white;
+	align-self: center;
+	justify-self: flex-start;
+    margin-top: 50px;
+}
+
+#card2row {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-self: center;
+	justify-self: center;
+	justify-content: space-around;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	/* margin-top: 20px; */
+	padding: 10px;
+}
+
+.project {
+	background-color: rgba(33, 33, 33, 0.23);
+	flex: 1;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	flex-direction: column;
+
+	border-radius: 20px;
+
+	margin: 15px;
+	height: 75%;
+
+	transition: all 0.2s ease-in-out;
+	color: white;
+
+	filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.7));
+}
+.project:hover {
+	cursor: pointer;
+	transform: translateY(-10px);
+	text-decoration: none;
+}
+
+#pianoIcon {
+	background-image: url("images/myPianoIcon.png");
+}
+
+#chessIcon {
+	background-image: url("images/ChessIcon.png");
+}
+
+#glossaryIcon {
+    background-image: url("images/GlossaryIcon.png");
+}
+
+.projectIcon {
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 75%;
+	height: 33%;
+}
+
+.projectName {
+	size: 1rem;
+	font-weight: bold;
+	text-align: center;
+}
+
+
+
+@media screen and (max-width: 800px) {
+	#card2row {
+		flex-direction: column;
+	}
+
+    #myProjectsHeading {
+        margin-top: 30px;
+    }
+
+	.project {
+		width: 90%;
+		flex-direction: row;
+		padding: 10px 25px;
+        justify-content: space-between;
+	}
+
+	.projectIcon {
+        justify-self: flex-start;
+		width: 30%;
+		height: 100%;
+	}
+	.projectName {
+		font-size: 25px;
+		width: 60%;
+		height: 100%;
+		text-align: center;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+}
