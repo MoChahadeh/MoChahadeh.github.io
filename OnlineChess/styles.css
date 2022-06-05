@@ -47,6 +47,10 @@
     background-color: rgb(44, 117, 186);
 }
 
+.possibleDestination {
+    background-color: rgb(87, 134, 178);
+}
+
 
 @media screen and (orientation: landscape){
     
