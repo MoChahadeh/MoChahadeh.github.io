@@ -1,13 +1,51 @@
-body {
-    margin: 0;
-    padding: 0;
+
+#container {
     display: flex;
-    width: 100vw;
-    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    margin: 0px;
+    padding: 0;
+    border: 1px solid black;
+}
+#board {
+    display: flex;
+    flex-direction: column;
+    /* border: 1px solid red; */
+
+}
+
+.square {
+    border: 1px solid black;
+    color: black;
+    display:flex;
     align-items: center;
     justify-content: center;
 }
 
-h1 {
-    text-align: center;
+@media screen and (orientation: landscape){
+    
+    .square {
+
+        width: calc(90vh/8);
+        height: calc(90vh/8);
+
+    }
+
+
+}
+@media screen and (orientation: portrait){
+    
+    .square {
+
+        width: calc(90vw/8);
+        height: calc(90vw/8);
+
+    }
+
+
 }
