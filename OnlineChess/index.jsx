@@ -3,10 +3,10 @@ const rootElement = document.getElementById("root");
 const startBoard = JSON.parse(`[
     [{"color": "black", "piece": "rook"},{"color": "black", "piece": "knight"},{"color": "black", "piece": "bishop"},{"color": "black", "piece": "queen"},{"color": "black", "piece": "king"},{"color": "black", "piece": "bishop"},{"color": "black", "piece": "knight"},{"color": "black", "piece": "rook"}],
     [{"color": "black", "piece": "pawn"},{"color": "black", "piece": "pawn"},{"color": "black", "piece": "pawn"},{"color": "black", "piece": "pawn"},{"color": "black", "piece": "pawn"},{"color": "black", "piece": "pawn"},{"color": "black", "piece": "pawn"},{"color": "black", "piece": "pawn"}],
-    [{"color": "null", "piece": "nul"},{"color": "null", "piece": "nul"},{"color": "null", "piece": "nul"},{"color": "null", "piece": "nul"},{"color": "null", "piece": "nul"},{"color": "null", "piece": "nul"},{"color": "null", "piece": "nul"},{"color": "null", "piece": "nul"}],
-    [{"color": "null", "piece": "nul"},{"color": "null", "piece": "nul"},{"color": "null", "piece": "nul"},{"color": "null", "piece": "nul"},{"color": "null", "piece": "nul"},{"color": "null", "piece": "nul"},{"color": "null", "piece": "nul"},{"color": "null", "piece": "nul"}],
-    [{"color": "null", "piece": "nul"},{"color": "null", "piece": "nul"},{"color": "null", "piece": "nul"},{"color": "null", "piece": "nul"},{"color": "null", "piece": "nul"},{"color": "null", "piece": "nul"},{"color": "null", "piece": "nul"},{"color": "null", "piece": "nul"}],
-    [{"color": "null", "piece": "nul"},{"color": "null", "piece": "nul"},{"color": "null", "piece": "nul"},{"color": "null", "piece": "nul"},{"color": "null", "piece": "nul"},{"color": "null", "piece": "nul"},{"color": "null", "piece": "nul"},{"color": "null", "piece": "nul"}],
+    [{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"}],
+    [{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"}],
+    [{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"}],
+    [{"color": "null", "piece": "null"},{"color": "black", "piece": "pawn"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"}],
     [{"color": "white", "piece": "pawn"},{"color": "white", "piece": "pawn"},{"color": "white", "piece": "pawn"},{"color": "white", "piece": "pawn"},{"color": "white", "piece": "pawn"},{"color": "white", "piece": "pawn"},{"color": "white", "piece": "pawn"},{"color": "white", "piece": "pawn"}],
     [{"color": "white", "piece": "rook"},{"color": "white", "piece": "knight"},{"color": "white", "piece": "bishop"},{"color": "white", "piece": "queen"},{"color": "white", "piece": "king"},{"color": "white", "piece": "bishop"},{"color": "white", "piece": "knight"},{"color": "white", "piece": "rook"}]
 ]`);
@@ -32,33 +32,77 @@ class App extends React.Component {
 
         if(this.state.selectedSquare) {
             document.getElementById(this.state.selectedSquare.id).classList.remove("clickedSquare");
+            
+            this.getPossibleDestinations(this.state.selectedSquare).map((sq) => {
+                document.getElementById(`sq${sq.row}${sq.col}`)?.classList.remove("possibleDestination");
+            });
+
             this.setState({
                 selectedSquare: null
             })
             return;
         } 
 
-        const currentBoard = this.state.history[this.state.history.length];
+        const currentBoard = this.state.history[this.state.history.length-1];
         const selectedSquare = {id: `sq${rowIndex}${colIndex}`,color: currentBoard[rowIndex][colIndex].color, piece: currentBoard[rowIndex][colIndex].piece };
 
         if(selectedSquare.color == "null") return;
 
-        document.getElementById(`sq${rowIndex}${colIndex}`).classList.add("clickedSquare");
-        this.setState({ selectedSquare });
+        if(this.getPossibleDestinations(selectedSquare).length > 0) {
 
-        for(let sq in getPossibleDestinations(selectedSquare)) {
-            
+            document.getElementById(`sq${rowIndex}${colIndex}`).classList.add("clickedSquare");
+            this.setState({ selectedSquare });
+
+            this.getPossibleDestinations(selectedSquare).map((sq) => {
+                document.getElementById(`sq${sq.row}${sq.col}`)?.classList.add("possibleDestination");
+            });
+
         }
 
     }
 
     getPossibleDestinations = (selectedSquare) => {
 
-        const row = selectedSquare.id.substring(1,2);
-        const sq = selectedSquare.id.substring(2);
+        const currentBoard = this.state.history[this.state.history.length-1];
+        
+        const {color, piece} = selectedSquare;
+        const row = parseInt(selectedSquare.id.substring(2,3));
+        const col = parseInt(selectedSquare.id.substring(3));
 
-        switch(selectedSquare.piece) {
+        switch(piece) {
 
+            case "pawn":
+                const pawnArr = [];
+
+                const direction = color == "white" ? -1 : 1;
+
+                if((direction == 1 && row < 7) || (direction == -1 && row > 0)) {
+
+                    if(currentBoard[row+direction][col].color == "null") {
+
+                        pawnArr.push({row: row+direction, col});
+
+                        if((direction == 1 && row == 1) || (direction == -1 && row == 6)) {
+
+                            if(currentBoard[row+(2*direction)][col].color == "null") {
+                                pawnArr.push({row: row+(2*direction), col});
+                            }
+
+                        }
+                    }
+
+                    
+                    if(col > 0 && currentBoard[row+(direction)][col-1].color != "null" && currentBoard[row+(direction)][col-1].color != color) {
+                            pawnArr.push({row: row+(direction), col: col-1});
+                    }
+
+                    if(col < 7 && currentBoard[row+(direction)][col+1].color != "null" && currentBoard[row+(direction)][col+1].color != color) {
+                        pawnArr.push({row: row+(direction), col: col+1});
+                    }
+
+                }
+               
+            return pawnArr;
             
         }
 
