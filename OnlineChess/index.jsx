@@ -23,7 +23,7 @@ class App extends React.Component {
     render() {
         return (
             <div id="container">
-                <Board onSquareClicked={this.onSquareClicked} />
+                <Board boardArray={this.state.history[this.state.history.length-1]} onSquareClicked={this.onSquareClicked} />
             </div>
         )
     }
@@ -157,7 +157,7 @@ function Board(props){
                     return <div className="row" id={`row${rowIndex}`} style={{marginTop : rowIndex == 0? 0 : -2}}>
                         {
                             new Array(8).fill(null).map((b, colIndex) => {
-                                return <Square id={`sq${rowIndex}${colIndex}`} piece={startBoard[rowIndex][colIndex]} color={getColorOfSquare(rowIndex, colIndex)}  onSquareClicked={() =>  props.onSquareClicked(rowIndex, colIndex)} />
+                                return <Square id={`sq${rowIndex}${colIndex}`} piece={props.boardArray[rowIndex][colIndex]} color={getColorOfSquare(rowIndex, colIndex)}  onSquareClicked={() =>  props.onSquareClicked(rowIndex, colIndex)} />
                             })
                         }
                     </div>
