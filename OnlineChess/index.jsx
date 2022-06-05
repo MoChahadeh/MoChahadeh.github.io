@@ -157,6 +157,103 @@ class App extends React.Component {
 
                 return rookArr;
             
+            case "bishop":
+
+                let bishopArr = [];
+
+                let completed = [false, false, false, false];
+
+                let i = 1;
+                while(completed.some((b) => (b == false))){
+
+                    if(row-i > -1 && col-i > -1 && !completed[0]) {
+                        if(currentBoard[row-i][col-i].color == color) {
+                            completed[0] = true;
+                            console.log("completed 0")
+                        }
+                        else {
+                            bishopArr.push({row: row-i, col: col-i});
+                            if(currentBoard[row-i][col-i].color != "null") {
+                                completed[0] = true
+                                console.log("completed 0")
+                            }
+                                
+                        }
+                    } else {
+                        completed[0] = true;
+                    }
+
+                    if(row-i > -1 && col+i < 8 && !completed[1]) {
+
+                        if(currentBoard[row-i][col+i].color == color) {
+                            completed[1] = true;
+                            console.log("completed 1")
+                        }
+                        else {
+                            bishopArr.push({row: row-i, col: col+i});
+                            if(currentBoard[row-i][col+i].color != "null") {
+                                completed[1] = true;
+                                console.log("completed 1")
+                        }}
+
+                    }else {
+                        completed[1] = true;
+                    }
+
+                    if(row+i < 8 && col-i > -1 && !completed[2]) {
+
+                        if(currentBoard[row+i][col-i].color == color) {
+                            completed[2] = true;
+                            console.log("completed 2")
+                        }
+                        else {
+                            bishopArr.push({row: row+i, col: col-i});
+                            if(currentBoard[row+i][col-i].color != "null") {
+                                completed[2] = true;
+                                console.log("completed 2")
+                            }
+                        }
+
+                    }else {
+                        completed[2] = true;
+                    }
+
+                    if(row+i < 8 && col+i < 8 && !completed[3]) {
+
+                        if(currentBoard[row+i][col+i].color == color) {
+                            completed[3] = true;
+                            console.log("completed 3")
+
+                        }
+                        else {
+                            bishopArr.push({row: row+i, col: col+i});
+                            if(currentBoard[row+i][col+i].color != "null") {
+                                completed[3] = true;
+                                console.log("completed 3")
+                            }
+                        }
+
+                    }else {
+                        completed[3] = true;
+                    }
+                    i++;
+                }
+
+                return bishopArr;
+
+            case "queen" :
+
+                let queenArr = [];
+                const manipulated = JSON.parse(JSON.stringify(selectedSquare));
+                manipulated.piece = "rook";
+                queenArr = this.getPossibleDestinations(manipulated);
+
+                manipulated.piece = "bishop";
+
+                queenArr = queenArr.concat(this.getPossibleDestinations(manipulated));
+
+                return queenArr;
+                
         }
 
         return [];
