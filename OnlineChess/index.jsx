@@ -13,6 +13,14 @@ const startBoard = JSON.parse(`[
 
 class App extends React.Component {
 
+    state = {
+        
+        selectedSquare: null,
+        history: [startBoard],
+        isWhiteTurn: false,
+
+    }
+
     render() {
         return (
             <div id="container">
@@ -34,7 +42,7 @@ const Board = (props) => {
                     return <div className="row" id={`row${rowIndex}`} style={{marginTop : rowIndex == 0? 0 : -2}}>
                         {
                             new Array(8).fill(null).map((b, colIndex) => {
-                                return <Square id={`${rowIndex}${colIndex}`} piece={startBoard[rowIndex][colIndex]} color={getColorOfSquare(rowIndex, colIndex)}/>
+                                return <Square id={`sq${rowIndex}${colIndex}`} piece={startBoard[rowIndex][colIndex]} color={getColorOfSquare(rowIndex, colIndex)}/>
                             })
                         }
                     </div>
@@ -78,7 +86,6 @@ function getColorOfSquare(row, col) {
             }
             break;
     }
-
 
 }
 
