@@ -18,22 +18,41 @@ class App extends React.Component {
         selectedSquare: null,
         history: [startBoard],
         isWhiteTurn: false,
-
     }
 
     render() {
         return (
             <div id="container">
-                <Board />
+                <Board onSquareClicked={this.onSquareClicked} />
             </div>
         )
+    }
+
+    onSquareClicked = (rowIndex, colIndex) => {
+
+        console.log("clicked");
+
+        if(this.state.selectedSquare) {
+            document.getElementById(this.state.selectedSquare.id).classList.remove("clickedSquare");
+            this.setState({
+                selectedSquare: null
+            })
+            return;
+        } 
+
+        const currentBoard = startBoard;
+        const clickedPiece = startBoard[rowIndex][colIndex];
+
+        document.getElementById(`sq${rowIndex}${colIndex}`).classList.add("clickedSquare");
+        this.setState({
+            selectedSquare: {id: `sq${rowIndex}${colIndex}`, color : clickedPiece.color, piece: clickedPiece.piece}
+        });
+
     }
 
 }
 
 const Board = (props) => {
-
-
 
     return(
         <div id="board">
@@ -42,7 +61,7 @@ const Board = (props) => {
                     return <div className="row" id={`row${rowIndex}`} style={{marginTop : rowIndex == 0? 0 : -2}}>
                         {
                             new Array(8).fill(null).map((b, colIndex) => {
-                                return <Square id={`sq${rowIndex}${colIndex}`} piece={startBoard[rowIndex][colIndex]} color={getColorOfSquare(rowIndex, colIndex)}/>
+                                return <Square id={`sq${rowIndex}${colIndex}`} piece={startBoard[rowIndex][colIndex]} color={getColorOfSquare(rowIndex, colIndex)}  onSquareClicked={() => {console.log("hello"); props.onSquareClicked(rowIndex, colIndex)}} />
                             })
                         }
                     </div>
@@ -59,7 +78,7 @@ const Square = (props) => {
     const imgUrl = props.piece.color == "null" ? "" : `./assets/chessPieces/${props.piece.color}/${props.piece.piece}.png`;
 
     return (
-        <div className="square" id={props.id} style={{backgroundColor: props.color}}>
+        <div onClick={props.onSquareClicked} id={props.id} className={"square " + props.color}>
             <div className="pieceImg" style={{backgroundImage: imgUrl ? `url("${imgUrl}")` : "none"}} />
         </div>
     );

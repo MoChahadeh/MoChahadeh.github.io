@@ -35,6 +35,19 @@
     height: 75%;
 }
 
+
+.white {
+    background-color: white;
+}
+.gray {
+    background-color: gray;
+}
+
+.clickedSquare {
+    background-color: blue;
+}
+
+
 @media screen and (orientation: landscape){
     
     .square {
