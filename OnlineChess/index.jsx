@@ -39,20 +39,36 @@ class App extends React.Component {
         } 
 
         const currentBoard = this.state.history[this.state.history.length];
-        const clickedPiece = startBoard[rowIndex][colIndex];
+        const selectedSquare = {id: `sq${rowIndex}${colIndex}`,color: currentBoard[rowIndex][colIndex].color, piece: currentBoard[rowIndex][colIndex].piece };
 
-        if(clickedPiece.color == "null") return;
+        if(selectedSquare.color == "null") return;
 
         document.getElementById(`sq${rowIndex}${colIndex}`).classList.add("clickedSquare");
-        this.setState({
-            selectedSquare: {id: `sq${rowIndex}${colIndex}`, color : clickedPiece.color, piece: clickedPiece.piece}
-        });
+        this.setState({ selectedSquare });
+
+        for(let sq in getPossibleDestinations(selectedSquare)) {
+            
+        }
+
+    }
+
+    getPossibleDestinations = (selectedSquare) => {
+
+        const row = selectedSquare.id.substring(1,2);
+        const sq = selectedSquare.id.substring(2);
+
+        switch(selectedSquare.piece) {
+
+            
+        }
+
+        return [];
 
     }
 
 }
 
-const Board = (props) => {
+function Board(props){
 
     return(
         <div id="board">
@@ -61,7 +77,7 @@ const Board = (props) => {
                     return <div className="row" id={`row${rowIndex}`} style={{marginTop : rowIndex == 0? 0 : -2}}>
                         {
                             new Array(8).fill(null).map((b, colIndex) => {
-                                return <Square id={`sq${rowIndex}${colIndex}`} piece={startBoard[rowIndex][colIndex]} color={getColorOfSquare(rowIndex, colIndex)}  onSquareClicked={() => {console.log("hello"); props.onSquareClicked(rowIndex, colIndex)}} />
+                                return <Square id={`sq${rowIndex}${colIndex}`} piece={startBoard[rowIndex][colIndex]} color={getColorOfSquare(rowIndex, colIndex)}  onSquareClicked={() =>  props.onSquareClicked(rowIndex, colIndex)} />
                             })
                         }
                     </div>
@@ -73,7 +89,7 @@ const Board = (props) => {
 }
 
 
-const Square = (props) => {
+function Square(props){
 
     const imgUrl = props.piece.color == "null" ? "" : `./assets/chessPieces/${props.piece.color}/${props.piece.piece}.png`;
 
