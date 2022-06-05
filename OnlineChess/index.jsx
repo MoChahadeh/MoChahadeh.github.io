@@ -17,7 +17,7 @@ class App extends React.Component {
         
         selectedSquare: null,
         history: [startBoard],
-        isWhiteTurn: false,
+        isWhiteTurn: true,
     }
 
     render() {
@@ -58,7 +58,7 @@ class App extends React.Component {
 
         if(selectedSquare.color == "null") return;
 
-        if(this.getPossibleDestinations(selectedSquare).length > 0) {
+        if(this.getPossibleDestinations(selectedSquare).length > 0 && (selectedPiece.color == "white") == this.state.isWhiteTurn) {
 
             document.getElementById(`sq${rowIndex}${colIndex}`).classList.add("clickedSquare");
             this.setState({ selectedSquare });
@@ -271,6 +271,34 @@ class App extends React.Component {
                 })
 
                 return kingArr;
+            
+            case "knight":
+
+                const possibleKnightMoves = [
+                    {row: -2, col: -1},
+                    {row: -2, col: 1},
+                    {row: 2, col: -1},
+                    {row: 2, col: 1},
+                    {row: -1, col: -2},
+                    {row: -1, col: 2},
+                    {row: 1, col: -2},
+                    {row: 1, col: 2},
+                ]
+
+                const knightArr = [];
+
+                possibleKnightMoves.map((sq) => {
+
+                    let newPosRow = row+sq.row;
+                    let newPosCol = col+sq.col;
+
+                    if(newPosRow < 8 && newPosRow > -1 && newPosCol < 8 && newPosCol > -1 && currentBoard[newPosRow][newPosCol].color != color) {
+                        knightArr.push({row: newPosRow, col: newPosCol});
+                    }
+
+                })
+
+                return knightArr;
                 
                 
         }
