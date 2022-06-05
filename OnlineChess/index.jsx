@@ -1,14 +1,14 @@
 const rootElement = document.getElementById("root");
 
 const startBoard = JSON.parse(`[
-    [{"color": "black", "piece": "rook"},{"color": "black", "piece": "knight"},{"color": "black", "piece": "bishop"},{"color": "black", "piece": "queen"},{"color": "black", "piece": "king"},{"color": "black", "piece": "bishop"},{"color": "black", "piece": "knight"},{"color": "black", "piece": "rook"}],
+    [{"color": "black", "piece": "rook", "castlable" : true},{"color": "black", "piece": "knight"},{"color": "black", "piece": "bishop"},{"color": "black", "piece": "queen"},{"color": "black", "piece": "king", "castable" : true},{"color": "black", "piece": "bishop"},{"color": "black", "piece": "knight"},{"color": "black", "piece": "rook", "castlable" : true}],
     [{"color": "black", "piece": "pawn"},{"color": "black", "piece": "pawn"},{"color": "black", "piece": "pawn"},{"color": "black", "piece": "pawn"},{"color": "black", "piece": "pawn"},{"color": "black", "piece": "pawn"},{"color": "black", "piece": "pawn"},{"color": "black", "piece": "pawn"}],
     [{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"}],
     [{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"}],
     [{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"}],
     [{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"}],
     [{"color": "white", "piece": "pawn"},{"color": "white", "piece": "pawn"},{"color": "white", "piece": "pawn"},{"color": "white", "piece": "pawn"},{"color": "white", "piece": "pawn"},{"color": "white", "piece": "pawn"},{"color": "white", "piece": "pawn"},{"color": "white", "piece": "pawn"}],
-    [{"color": "white", "piece": "rook"},{"color": "white", "piece": "knight"},{"color": "white", "piece": "bishop"},{"color": "white", "piece": "queen"},{"color": "white", "piece": "king"},{"color": "white", "piece": "bishop"},{"color": "white", "piece": "knight"},{"color": "white", "piece": "rook"}]
+    [{"color": "white", "piece": "rook", "castlable" : true},{"color": "white", "piece": "knight"},{"color": "white", "piece": "bishop"},{"color": "white", "piece": "queen"},{"color": "white", "piece": "king", "castable" : true},{"color": "white", "piece": "bishop"},{"color": "white", "piece": "knight"},{"color": "white", "piece": "rook", "castlable" : true}]
 ]`);
 
 class App extends React.Component {
@@ -114,6 +114,48 @@ class App extends React.Component {
                 }
                
             return pawnArr;
+
+            case "rook":
+                let rookArr = [];
+
+                for(let i = row-1; i > -1; i-- ) {
+
+                    if(currentBoard[i][col].color == color) {break;}
+
+                    rookArr.push({row: i, col});
+
+                    if(currentBoard[i][col].color != "null") {break;}
+
+                }
+
+                for(let i = row+1; i < 8; i++) {
+                    if(currentBoard[i][col].color == color) {break;}
+
+                    rookArr.push({row: i, col});
+
+                    if(currentBoard[i][col].color != "null") {break;}
+                    
+                }
+
+                for(let i = col-1; i > -1; i--) {
+                    if(currentBoard[row][i].color == color) {break;}
+
+                    rookArr.push({row, col: i});
+
+                    if(currentBoard[row][i].color != "null") break;
+                    
+                }
+
+                for(let i = col+1; i < 8; i++) {
+                    if(currentBoard[row][i].color == color) break;
+
+                    rookArr.push({row, col: i});
+
+                    if(currentBoard[row][i].color != "null") break;
+                    
+                }
+
+                return rookArr;
             
         }
 
