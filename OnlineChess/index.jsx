@@ -30,8 +30,6 @@ class App extends React.Component {
 
     onSquareClicked = (rowIndex, colIndex) => {
 
-        console.log("clicked");
-
         if(this.state.selectedSquare) {
             document.getElementById(this.state.selectedSquare.id).classList.remove("clickedSquare");
             this.setState({
@@ -40,8 +38,10 @@ class App extends React.Component {
             return;
         } 
 
-        const currentBoard = startBoard;
+        const currentBoard = this.state.history[this.state.history.length];
         const clickedPiece = startBoard[rowIndex][colIndex];
+
+        if(clickedPiece.color == "null") return;
 
         document.getElementById(`sq${rowIndex}${colIndex}`).classList.add("clickedSquare");
         this.setState({
