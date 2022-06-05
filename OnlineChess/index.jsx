@@ -31,9 +31,19 @@ class App extends React.Component {
     onSquareClicked = (rowIndex, colIndex) => {
 
         if(this.state.selectedSquare) {
+
+            const possibleDests = this.getPossibleDestinations(this.state.selectedSquare);
+
+            if(possibleDests.some(obj => (obj.row == rowIndex && obj.col == colIndex))) {
+
+                this.movePiece(this.state.selectedSquare, {row:rowIndex, col: colIndex});
+                console.log("hello");
+                return;
+            }
+
             document.getElementById(this.state.selectedSquare.id).classList.remove("clickedSquare");
             
-            this.getPossibleDestinations(this.state.selectedSquare).map((sq) => {
+            possibleDests.map((sq) => {
                 document.getElementById(`sq${sq.row}${sq.col}`)?.classList.remove("possibleDestination");
             });
 
@@ -44,7 +54,8 @@ class App extends React.Component {
         } 
 
         const currentBoard = this.state.history[this.state.history.length-1];
-        const selectedSquare = {id: `sq${rowIndex}${colIndex}`,color: currentBoard[rowIndex][colIndex].color, piece: currentBoard[rowIndex][colIndex].piece };
+        const selectedPiece = currentBoard[rowIndex][colIndex];
+        const selectedSquare = {id: `sq${rowIndex}${colIndex}`,color: selectedPiece.color, piece: selectedPiece.piece };
 
         if(selectedSquare.color == "null") return;
 
@@ -108,6 +119,20 @@ class App extends React.Component {
 
         return [];
 
+    }
+
+    movePiece = (from, to) => {
+
+        const currentBoard = JSON.parse(JSON.stringify(this.state.history[this.state.history-1]));
+
+        if(from.piece == "pawn") {
+            if((from.color == "black" && to.row == 7) || (from.color == "white") && to.row == 7) {
+                from.piece = "queen";
+            }
+        }
+
+
+        return ;
     }
 
 }
