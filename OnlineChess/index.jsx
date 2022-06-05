@@ -37,7 +37,6 @@ class App extends React.Component {
             if(possibleDests.some(obj => (obj.row == rowIndex && obj.col == colIndex))) {
 
                 this.movePiece(this.state.selectedSquare, {row:rowIndex, col: colIndex});
-                console.log("hello");
                 return;
             }
 
@@ -169,13 +168,11 @@ class App extends React.Component {
                     if(row-i > -1 && col-i > -1 && !completed[0]) {
                         if(currentBoard[row-i][col-i].color == color) {
                             completed[0] = true;
-                            console.log("completed 0")
                         }
                         else {
                             bishopArr.push({row: row-i, col: col-i});
                             if(currentBoard[row-i][col-i].color != "null") {
                                 completed[0] = true
-                                console.log("completed 0")
                             }
                                 
                         }
@@ -187,13 +184,11 @@ class App extends React.Component {
 
                         if(currentBoard[row-i][col+i].color == color) {
                             completed[1] = true;
-                            console.log("completed 1")
                         }
                         else {
                             bishopArr.push({row: row-i, col: col+i});
                             if(currentBoard[row-i][col+i].color != "null") {
                                 completed[1] = true;
-                                console.log("completed 1")
                         }}
 
                     }else {
@@ -204,13 +199,11 @@ class App extends React.Component {
 
                         if(currentBoard[row+i][col-i].color == color) {
                             completed[2] = true;
-                            console.log("completed 2")
                         }
                         else {
                             bishopArr.push({row: row+i, col: col-i});
                             if(currentBoard[row+i][col-i].color != "null") {
                                 completed[2] = true;
-                                console.log("completed 2")
                             }
                         }
 
@@ -222,14 +215,12 @@ class App extends React.Component {
 
                         if(currentBoard[row+i][col+i].color == color) {
                             completed[3] = true;
-                            console.log("completed 3")
 
                         }
                         else {
                             bishopArr.push({row: row+i, col: col+i});
                             if(currentBoard[row+i][col+i].color != "null") {
                                 completed[3] = true;
-                                console.log("completed 3")
                             }
                         }
 
@@ -253,6 +244,34 @@ class App extends React.Component {
                 queenArr = queenArr.concat(this.getPossibleDestinations(manipulated));
 
                 return queenArr;
+
+            case "king" :
+
+                const possibleKingMoves = [
+                    {row: -1, col: -1},
+                    {row: -1, col: 0},
+                    {row: -1, col: 1},
+                    {row: 0, col: -1},
+                    {row: 0, col: 1},
+                    {row: 1, col: -1},
+                    {row: 1, col: 0},
+                    {row: 1, col: 1},
+                ]
+
+                let kingArr = [];
+                possibleKingMoves.map((sq) => {
+
+                    let newPosRow = row+sq.row;
+                    let newPosCol = col+sq.col;
+
+                    if(newPosRow < 8 && newPosRow > -1 && newPosCol < 8 && newPosCol > -1 && currentBoard[newPosRow][newPosCol].color != color) {
+                        kingArr.push({row: newPosRow, col: newPosCol});
+                    }
+
+                })
+
+                return kingArr;
+                
                 
         }
 
