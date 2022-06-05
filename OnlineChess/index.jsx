@@ -6,7 +6,7 @@ const startBoard = JSON.parse(`[
     [{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"}],
     [{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"}],
     [{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"}],
-    [{"color": "null", "piece": "null"},{"color": "black", "piece": "pawn"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"}],
+    [{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"},{"color": "null", "piece": "null"}],
     [{"color": "white", "piece": "pawn"},{"color": "white", "piece": "pawn"},{"color": "white", "piece": "pawn"},{"color": "white", "piece": "pawn"},{"color": "white", "piece": "pawn"},{"color": "white", "piece": "pawn"},{"color": "white", "piece": "pawn"},{"color": "white", "piece": "pawn"}],
     [{"color": "white", "piece": "rook"},{"color": "white", "piece": "knight"},{"color": "white", "piece": "bishop"},{"color": "white", "piece": "queen"},{"color": "white", "piece": "king"},{"color": "white", "piece": "bishop"},{"color": "white", "piece": "knight"},{"color": "white", "piece": "rook"}]
 ]`);
@@ -123,19 +123,34 @@ class App extends React.Component {
 
     movePiece = (from, to) => {
 
-        const currentBoard = JSON.parse(JSON.stringify(this.state.history[this.state.history-1]));
+        const currentBoard = JSON.parse(JSON.stringify(this.state.history[this.state.history.length-1]));
 
-        if(from.piece == "pawn") {
-            if((from.color == "black" && to.row == 7) || (from.color == "white") && to.row == 7) {
-                from.piece = "queen";
+        const row = parseInt(from.id.substring(2,3));
+        const col = parseInt(from.id.substring(3));
+
+        let {piece, color} = from;
+
+        if(piece == "pawn") {
+            if((color == "black" && to.row == 7) || (color == "white") && to.row == 0) {
+                piece = "queen";
             }
         }
 
 
         currentBoard[to.row][to.col] = {
-            color: from.color,
-            piece: from.piece
+            color: color,
+            piece: piece
         }
+        currentBoard[row][col] = {
+            color: "null",
+            piece: "null"
+        }
+
+
+        document.getElementById(`sq${row}${col}`).classList.remove("clickedSquare");
+        this.getPossibleDestinations(from).map((obj) => {
+            document.getElementById(`sq${obj.row}${obj.col}`).classList.remove("possibleDestination");
+        })
 
         this.setState({
             history: this.state.history.concat([currentBoard]),
