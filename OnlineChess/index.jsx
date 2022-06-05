@@ -34,7 +34,7 @@ const Board = (props) => {
                     return <div className="row" id={`row${rowIndex}`} style={{marginTop : rowIndex == 0? 0 : -2}}>
                         {
                             new Array(8).fill(null).map((b, colIndex) => {
-                                return <Square id={`${rowIndex}${colIndex}`} piece={startBoard[rowIndex][colIndex]}/>
+                                return <Square id={`${rowIndex}${colIndex}`} piece={startBoard[rowIndex][colIndex]} color={getColorOfSquare(rowIndex, colIndex)}/>
                             })
                         }
                     </div>
@@ -51,10 +51,35 @@ const Square = (props) => {
     const imgUrl = props.piece.color == "null" ? "" : `./assets/chessPieces/${props.piece.color}/${props.piece.piece}.png`;
 
     return (
-        <div className="square" id={props.id}>
+        <div className="square" id={props.id} style={{backgroundColor: props.color}}>
             <div className="pieceImg" style={{backgroundImage: imgUrl ? `url("${imgUrl}")` : "none"}} />
         </div>
     );
+}
+
+function getColorOfSquare(row, col) {
+
+    switch(row%2) {
+
+        case 0:
+            switch(col%2) {
+                case 0:
+                    return 'white';
+                case 1:
+                    return 'gray';
+            }
+            break;
+        case 1:
+            switch(col%2) {
+                case 0:
+                    return 'gray';
+                case 1:
+                    return 'white';
+            }
+            break;
+    }
+
+
 }
 
 
