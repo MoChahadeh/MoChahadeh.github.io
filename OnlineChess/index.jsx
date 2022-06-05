@@ -132,6 +132,17 @@ class App extends React.Component {
         }
 
 
+        currentBoard[to.row][to.col] = {
+            color: from.color,
+            piece: from.piece
+        }
+
+        this.setState({
+            history: this.state.history.concat([currentBoard]),
+            selectedSquare: null,
+            isWhiteTurn: !this.state.isWhiteTurn
+        });
+
         return ;
     }
 
