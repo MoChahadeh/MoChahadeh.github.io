@@ -23,7 +23,7 @@ class App extends React.Component {
     render() {
         return (
             <div id="container">
-                <Board boardArray={this.state.history[this.state.history.length-1]} onSquareClicked={this.onSquareClicked} />
+                <Board isWhiteTurn={this.state.isWhiteTurn} boardArray={this.state.history[this.state.history.length-1]} onSquareClicked={this.onSquareClicked} />
             </div>
         )
     }
@@ -320,6 +320,15 @@ class App extends React.Component {
             if((color == "black" && to.row == 7) || (color == "white") && to.row == 0) {
                 piece = "queen";
             }
+
+            if(Math.abs(from.row - to.row) == 2) {
+                if(col-1 > -1 && currentBoard[to.row][to.col-1].piece == "pawn" && currentBoard[to.row][to.row[to.col-1]].color != color) {
+                    currentBoard[to.row][to.col-1].enPassant = true;
+                }
+                if(col+1 < 8 && currentBoard[to.row][to.col+1].piece == "pawn" && currentBoard[to.row][to.row[to.col+1]].color != color) {
+                    currentBoard[to.row][to.col+1].enPassant = true;
+                }
+            }
         }
 
 
@@ -352,13 +361,13 @@ class App extends React.Component {
 function Board(props){
 
     return(
-        <div id="board">
+        <div id="board" style={{flexDirection: props.isWhiteTurn ? "column" : "column-reverse"}}> 
             {
-                new Array(8).fill(null).map((a,rowIndex) => {
-                    return <div className="row" id={`row${rowIndex}`} style={{marginTop : rowIndex == 0? 0 : -2}}>
+                props.boardArray.map((row,rowIndex) => {
+                    return <div className="row" id={`row${rowIndex}`} style={{marginTop : props.isWhiteTurn ? (rowIndex == 0 ? 0 : -2) : -2, flexDirection: props.isWhiteTurn ? "row" : "row-reverse"}}>
                         {
-                            new Array(8).fill(null).map((b, colIndex) => {
-                                return <Square id={`sq${rowIndex}${colIndex}`} piece={props.boardArray[rowIndex][colIndex]} color={getColorOfSquare(rowIndex, colIndex)}  onSquareClicked={() =>  props.onSquareClicked(rowIndex, colIndex)} />
+                            row.map((SqObj, colIndex) => {
+                                return <Square id={`sq${rowIndex}${colIndex}`} piece={SqObj} color={getColorOfSquare(rowIndex, colIndex)}  onSquareClicked={() =>  props.onSquareClicked(rowIndex, colIndex)} />
                             })
                         }
                     </div>
