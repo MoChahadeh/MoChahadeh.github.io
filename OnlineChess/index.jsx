@@ -446,7 +446,7 @@ function Board(props){
 
 function Square(props){
 
-    const imgUrl = props.piece.color == "null" ? "" : `./assets/chessPieces/${props.piece.color}/${props.piece.piece}.png`;
+    const imgUrl = props.piece.color == "null" ? "" : `./assets/chessPieces/${props.piece.color}/${props.piece.piece}.svg`;
 
     return (
         <div onClick={props.onSquareClicked} id={props.id} className={"square " + props.color}>
