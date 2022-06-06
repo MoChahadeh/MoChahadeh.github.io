@@ -210,7 +210,8 @@ body {
 		width: 90%;
 		flex-direction: row;
 		padding: 10px 25px;
-        justify-content: space-between;
+        justify-content: space-around;
+		align-items: center;
 	}
 
 	.projectIcon {
