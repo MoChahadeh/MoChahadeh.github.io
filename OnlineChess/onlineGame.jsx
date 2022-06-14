@@ -10,21 +10,106 @@ const startBoard = JSON.parse(`[
     [{"color": "white", "piece": "rook", "castlable" : true},{"color": "white", "piece": "knight"},{"color": "white", "piece": "bishop"},{"color": "white", "piece": "queen"},{"color": "white", "piece": "king", "castlable" : true},{"color": "white", "piece": "bishop"},{"color": "white", "piece": "knight"},{"color": "white", "piece": "rook", "castlable" : true}]
 ]`);
 
-class LocalGame extends React.Component {
+class OnlineGame extends React.Component {
 
     state = {
         
+        gameId: "",
+        move: -1,
         selectedSquare: null,
-        history: [startBoard],
+        history: [[]],
         isWhiteTurn: true,
+        isWhite: true,
+        player2: false,
+        playerId: this.props.playerId,
+        checking: false,
+        failedToConnect: false,
+        firstFetchDone: false,
+    }
+
+    constructor(props) {
+
+        super(props)
+
+        this.firstFetch();
+
+    }
+
+    async firstFetch() {
+        try {
+            
+            const res = await fetch(`${this.props.domain}/${this.props.requestString}`, {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify({playerId: this.state.playerId})
+            })
+
+            const data = await res.json()
+            console.log(data)
+            this.setState({
+                gameId: data.game.id,
+                move: data.game.move,
+                isWhiteTurn: data.game.isWhiteTurn,
+                history: this.state.history.concat([data.game.board]),
+                failedToConnect: false,
+                isWhite: data.isWhite,
+                player2: data.game.player2 != null,
+                firstFetchDone: true,
+            })
+        
+        } catch (err) {
+            console.log(err);
+            this.setState({
+                failedToConnect: true
+            })
+        }
     }
 
     render() {
+
+        if((this.state.isWhite != this.state.isWhiteTurn || !this.state.player2) && !this.state.checking && this.state.firstFetchDone) this.checkStatus();
+
         return (
-            <div id="container">
-                <Board isWhiteTurn={this.state.isWhiteTurn} boardArray={this.state.history[this.state.history.length-1]} onSquareClicked={this.onSquareClicked} />
-            </div>
+            !this.state.failedToConnect && this.state.player2 ? <div id="container">
+                <h4 id="gameIdText">{this.state.gameId}</h4>
+                <OnlineBoard isWhite={this.state.isWhite} isWhiteTurn={this.state.isWhiteTurn} boardArray={this.state.history[this.state.history.length-1]} onSquareClicked={this.onSquareClicked} />
+            </div> : (!this.state.player2 && !this.state.failedToConnect ? <p>Waiting for player 2.. GameID: {this.state.gameId}</p> : <p>Failed to connect</p>)
         )
+    }
+
+    checkStatus = () => {
+
+        const statusInterval = setInterval(() => {
+            console.log("Checking..")
+            fetch(`${this.props.domain}/checkStatus/${this.state.gameId}`)
+            .then(res => res.json())
+            .then(data => {
+                if(this.state.move != data.game.move || this.state.player2 != (data.game.player2 != null)) {
+                    clearInterval(statusInterval);
+                    this.setState({
+                        history: this.state.history.concat([data.game.board]),
+                        player2: data.game.player2 != null,
+                        move: data.game.move,
+                        isWhiteTurn: data.game.isWhiteTurn,
+                        checking: false,
+                    })
+                }
+        }).catch(err => {
+            console.log(err);
+            clearInterval(statusInterval);
+            this.setState({
+                failedToConnect: true,
+            })
+        })
+        },500)
+
+        this.setState({
+            checking: true,
+        })
+
     }
 
     onSquareClicked = (rowIndex, colIndex) => {
@@ -58,7 +143,7 @@ class LocalGame extends React.Component {
 
         if(selectedSquare.color == "null") return;
 
-        if(this.getPossibleDestinations(selectedSquare).length > 0 && (selectedSquare.color == "white") == this.state.isWhiteTurn) {
+        if(this.getPossibleDestinations(selectedSquare).length > 0 && (selectedSquare.color == "white") == this.state.isWhite && this.state.isWhite == this.state.isWhiteTurn) {
 
             document.getElementById(`sq${rowIndex}${colIndex}`).classList.add("clickedSquare");
             this.setState({ selectedSquare });
@@ -411,27 +496,46 @@ class LocalGame extends React.Component {
             document.getElementById(`sq${obj.row}${obj.col}`).classList.remove("possibleDestination");
         })
 
-        this.setState({
-            history: this.state.history.concat([currentBoard]),
-            selectedSquare: null,
-            isWhiteTurn: !this.state.isWhiteTurn
-        });
+
+        fetch(`${this.props.domain}/play/${this.state.gameId}`, {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify({board: currentBoard, playerId: this.state.playerId})
+        }).then((res) => res.json()).then(data => {
+            this.setState({
+                history: this.state.history.concat([data.game.board]),
+                isWhiteTurn: data.game.isWhiteTurn,
+                failedToConnect: false,
+            })
+        }).catch((rej) => {
+            console.log(rej.message)
+        })
+
+        // this.setState({
+        //     history: this.state.history.concat([currentBoard]),
+        //     selectedSquare: null,
+        //     isWhiteTurn: !this.state.isWhiteTurn
+        // });
 
         return ;
     }
 
+
 }
 
-function Board(props){
+function OnlineBoard(props) {
 
     return(
-        <div id="board" style={{flexDirection: props.isWhiteTurn ? "column" : "column-reverse"}}> 
+        <div id="board" style={{flexDirection: props.isWhite ? "column" : "column-reverse"}}> 
             {
                 props.boardArray.map((row,rowIndex) => {
-                    return <div className="row" id={`row${rowIndex}`} style={{marginTop : props.isWhiteTurn ? (rowIndex == 0 ? 0 : -2) : -2, flexDirection: props.isWhiteTurn ? "row" : "row-reverse"}}>
+                    return <div className="row" id={`row${rowIndex}`} style={{marginTop : props.isWhite ? (rowIndex == 0 ? 0 : -2) : -2, flexDirection: props.isWhite ? "row" : "row-reverse"}}>
                         {
                             row.map((SqObj, colIndex) => {
-                                return <Square id={`sq${rowIndex}${colIndex}`} piece={SqObj} color={getColorOfSquare(rowIndex, colIndex)}  onSquareClicked={() =>  props.onSquareClicked(rowIndex, colIndex)} />
+                                return <OnlineSquare id={`sq${rowIndex}${colIndex}`} piece={SqObj} color={getColorOfSquare(rowIndex, colIndex)}  onSquareClicked={() =>  props.onSquareClicked(rowIndex, colIndex)} />
                             })
                         }
                     </div>
@@ -443,7 +547,7 @@ function Board(props){
 }
 
 
-function Square(props){
+function OnlineSquare(props) {
 
     const imgUrl = props.piece.color == "null" ? "" : `./assets/chessPieces/${props.piece.color}/${props.piece.piece}.svg`;
 
@@ -454,7 +558,7 @@ function Square(props){
     );
 }
 
-function getColorOfSquare(row, col) {
+function etColorOfSquare(row, col) {
 
     switch(row%2) {
 
@@ -477,3 +581,5 @@ function getColorOfSquare(row, col) {
     }
 
 }
+
+

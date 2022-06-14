@@ -21,7 +21,7 @@ class LocalGame extends React.Component {
     render() {
         return (
             <div id="container">
-                <Board isWhiteTurn={this.state.isWhiteTurn} boardArray={this.state.history[this.state.history.length-1]} onSquareClicked={this.onSquareClicked} />
+                <LocalBoard isWhiteTurn={this.state.isWhiteTurn} boardArray={this.state.history[this.state.history.length-1]} onSquareClicked={this.onSquareClicked} />
             </div>
         )
     }
@@ -421,7 +421,7 @@ class LocalGame extends React.Component {
 
 }
 
-function Board(props){
+function LocalBoard(props){
 
     return(
         <div id="board" style={{flexDirection: props.isWhiteTurn ? "column" : "column-reverse"}}> 
@@ -430,7 +430,7 @@ function Board(props){
                     return <div className="row" id={`row${rowIndex}`} style={{marginTop : props.isWhiteTurn ? (rowIndex == 0 ? 0 : -2) : -2, flexDirection: props.isWhiteTurn ? "row" : "row-reverse"}}>
                         {
                             row.map((SqObj, colIndex) => {
-                                return <Square id={`sq${rowIndex}${colIndex}`} piece={SqObj} color={getColorOfSquare(rowIndex, colIndex)}  onSquareClicked={() =>  props.onSquareClicked(rowIndex, colIndex)} />
+                                return <LocalSquare id={`sq${rowIndex}${colIndex}`} piece={SqObj} color={getColorOfSquare(rowIndex, colIndex)}  onSquareClicked={() =>  props.onSquareClicked(rowIndex, colIndex)} />
                             })
                         }
                     </div>
@@ -442,7 +442,7 @@ function Board(props){
 }
 
 
-function Square(props){
+function LocalSquare(props){
 
     const imgUrl = props.piece.color == "null" ? "" : `./assets/chessPieces/${props.piece.color}/${props.piece.piece}.svg`;
 

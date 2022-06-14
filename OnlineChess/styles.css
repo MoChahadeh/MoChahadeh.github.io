@@ -1,9 +1,104 @@
 
 #container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 99vh;
+}
+
+
+#gameIdText {
+    margin: 0px;
+}
+
+#mainMenuContainer {
+
+    display: flex;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 99vw;
+    height: 99vh;
+
+}
+
+#frame {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgba(128, 128, 128, 0.525);
+    border-radius: 20px;  
+    filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.7));
+    color: white;
+}
+
+#onlineChessTitle {
+    width: 100%;
+    height: 20%;
+    /* border: 1px solid red; */
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+}
+
+#choiceRow {
+    /* border: 1px solid red; */
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    height: 30%;
+
+}
+
+#chessImg {
+    /* border: 1px solid red; */
+    background-image: url("./assets/ChessIcon.png");
+    height: 40%;
+    width: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.playButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 30%;
+    height: 50%;
+    background-color: rgba(255, 255, 255, 0.468);
+    border-radius: 25px;
+    color: white;
+
+    transition: all 0.3s ease-in-out;
+}
+
+.playButton :hover {
+
+    color: white;
+    cursor: pointer;
+}
+
+.playButton > h2 {
+
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
+    display: flex;
+    color:  white;
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
 }
 
 .row {
@@ -61,6 +156,10 @@
 
     }
 
+    #frame {
+        width: calc(80vh);
+        height: calc(80vh/1.5);
+    }
 
 }
 @media screen and (orientation: portrait){
@@ -70,6 +169,11 @@
         width: calc(90vw/8);
         height: calc(90vw/8);
 
+    }
+
+    #frame {
+        width: calc(80vw);
+        height: calc(80vw);
     }
 
 
