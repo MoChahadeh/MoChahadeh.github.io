@@ -7,6 +7,10 @@
     height: 99vh;
 }
 
+a:hover {
+    text-decoration: none;
+}
+
 
 #gameIdText {
     margin: 0px;
