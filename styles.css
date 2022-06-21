@@ -117,21 +117,19 @@ body {
 	height: 100vh;
 	width: 100vw;
     background-color: var(--dark);
-}
-
-#card2 {
 	display: flex;
 	flex-direction: column;
 }
 
-#myProjectsHeading {
+
+.myProjectsHeading {
     color: white;
 	align-self: center;
 	justify-self: flex-start;
     margin-top: 50px;
 }
 
-#card2row {
+.projectRow {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
@@ -203,11 +201,11 @@ body {
 
 
 @media screen and (max-width: 800px) {
-	#card2row {
+	.projectRow {
 		flex-direction: column;
 	}
 
-    #myProjectsHeading {
+    .myProjectsHeading {
         margin-top: 30px;
     }
 
