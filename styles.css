@@ -9,6 +9,11 @@
 	user-select: none;
 	font-weight: lighter;
 	/* border: 1px solid red; */
+	scroll-behavior: smooth;
+}
+
+a:hover {
+	text-decoration: none;
 }
 
 body {
@@ -68,6 +73,7 @@ body {
 	-o-animation-delay: 2s;
 	animation-delay: 2s;
 	--animation-delay: 2s;
+	/* border: 1px solid red; */
 }
 
 #exploreText {
@@ -172,6 +178,21 @@ body {
 	text-decoration: none;
 }
 
+.projectIcon {
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	width: 75%;
+	height: 33%;
+	/* border: 1px solid red; */
+}
+
+.projectName {
+	size: 1rem;
+	font-weight: bold;
+	text-align: center;
+}
+
 #pianoIcon {
 	background-image: url("images/myPianoIcon.png");
 }
@@ -183,20 +204,13 @@ body {
 #glossaryIcon {
     background-image: url("images/GlossaryIcon.png");
 }
-
-.projectIcon {
-	background-size: contain;
-	background-repeat: no-repeat;
-	background-position: center;
-	width: 75%;
-	height: 33%;
+#snakeGameIcon {
+	background-image: url("images/SnakeGameIcon.png");
+	width: 100%;
+	height: 40%;
 }
 
-.projectName {
-	size: 1rem;
-	font-weight: bold;
-	text-align: center;
-}
+
 
 
 
@@ -222,6 +236,12 @@ body {
 		width: 30%;
 		height: 100%;
 	}
+
+	#snakeGameIcon {
+		width: 30%;
+		height: 110%;
+	}
+
 	.projectName {
 		font-size: 25px;
 		width: 60%;
