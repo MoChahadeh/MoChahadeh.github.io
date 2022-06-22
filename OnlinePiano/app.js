@@ -183,7 +183,7 @@ function deHighlightKey(key) {
 	document.getElementById(key).classList.remove("highlighted");
 }
 function getKeyClicked(key) {
-	switch (key) {
+	switch (key.toLowerCase()) {
 		case "a":
 			return "C";
 		case "s":
