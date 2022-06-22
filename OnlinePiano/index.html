@@ -1,19 +1,132 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Online Piano</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <script type="application/javascript" src="https://unpkg.com/react@16.0.0/umd/react.production.min.js"></script>
-    <script type="application/javascript" src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
+    <script type="application/javascript"
+        src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.production.min.js"></script>
     <script type="application/javascript" src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
     <script type="text/javascript" src="howler.core.min.js"></script>
     <link rel='stylesheet' type='text/css' media='screen' href='index.css'>
     <link rel="icon" type="image/x-icon" href="../images/myPianoIcon.png">
 </head>
+
 <body>
-    <div id="root"></div>
-    <script type="text/babel" src='index.jsx'></script>
+    <div id="root">
+
+        <div id="topContainer">
+
+            <div id="controlsDiv">
+                <div id="octaveControls">
+                    <a id="decreaseOctaveButton" class="controlButtons" onClick="decreaseOctave()">
+                        <p>&lt;</p>
+                    </a>
+                    <p id="octaveText">C3</p>
+                    <a id="increaseOctaveButton" class="controlButtons" onClick="increaseOctave()">
+                        <p>&gt;</p>
+                    </a>
+                </div>
+
+                <div id="instrumentControls">
+                    <a onClick="previousInstrument()" id="previousInstrumentButton" class="controlButtons">
+                        <p>&lt;</p>
+                    </a>
+                    <p id="instrumentName">Grand Piano</p>
+                    <a onClick="nextInstrument()" id="nextInstrumentButton" class="controlButtons">
+                        <p>&gt;</p>
+                    </a>
+                </div>
+            </div>
+
+
+            <div id="keyboardContainer">
+                <div onmousedown="!is_iOS ? playKey(this.id) : null" onmouseup="!is_iOS ? stopKey(this.id) : null"
+                    id="C" class="whiteKey">
+                    <p class="keyLabel">C</p>
+                </div>
+                <div onmousedown="!is_iOS ? playKey(this.id) : null" onmouseup="!is_iOS ? stopKey(this.id) : null"
+                    id="D" class="whiteKey">
+                    <p class="keyLabel">D</p>
+                </div>
+                <div onmousedown="!is_iOS ? playKey(this.id) : null" onmouseup="!is_iOS ? stopKey(this.id) : null"
+                    id="E" class="whiteKey">
+                    <p class="keyLabel">E</p>
+                </div>
+                <div onmousedown="!is_iOS ? playKey(this.id) : null" onmouseup="!is_iOS ? stopKey(this.id) : null"
+                    id="F" class="whiteKey">
+                    <p class="keyLabel">F</p>
+                </div>
+                <div onmousedown="!is_iOS ? playKey(this.id) : null" onmouseup="!is_iOS ? stopKey(this.id) : null"
+                    id="G" class="whiteKey">
+                    <p class="keyLabel">G</p>
+                </div>
+                <div onmousedown="!is_iOS ? playKey(this.id) : null" onmouseup="!is_iOS ? stopKey(this.id) : null"
+                    id="A" class="whiteKey">
+                    <p class="keyLabel">A</p>
+                </div>
+                <div onmousedown="!is_iOS ? playKey(this.id) : null" onmouseup="!is_iOS ? stopKey(this.id) : null"
+                    id="B" class="whiteKey">
+                    <p class="keyLabel">B</p>
+                </div>
+                <div onmousedown="!is_iOS ? playKey(this.id) : null" onmouseup="!is_iOS ? stopKey(this.id) : null"
+                    id="C1" class="whiteKey">
+                    <p class="keyLabel">C</p>
+                </div>
+                <div onmousedown="!is_iOS ? playKey(this.id) : null" onmouseup="!is_iOS ? stopKey(this.id) : null"
+                    id="D1" class="whiteKey">
+                    <p class="keyLabel">D</p>
+                </div>
+                <div onmousedown="!is_iOS ? playKey(this.id) : null" onmouseup="!is_iOS ? stopKey(this.id) : null"
+                    id="E1" class="whiteKey">
+                    <p class="keyLabel">E</p>
+                </div>
+                <div onmousedown="!is_iOS ? playKey(this.id) : null" onmouseup="!is_iOS ? stopKey(this.id) : null"
+                    id="F1" class="whiteKey">
+                    <p class="keyLabel">F</p>
+                </div>
+                <div onmousedown="!is_iOS ? playKey(this.id) : null" onmouseup="!is_iOS ? stopKey(this.id) : null"
+                    id="Db" class="blackKey">
+                    <p class="keyLabel">Db</p>
+                </div>
+                <div onmousedown="!is_iOS ? playKey(this.id) : null" onmouseup="!is_iOS ? stopKey(this.id) : null"
+                    id="Eb" class="blackKey">
+                    <p class="keyLabel">Eb</p>
+                </div>
+                <div onmousedown="!is_iOS ? playKey(this.id) : null" onmouseup="!is_iOS ? stopKey(this.id) : null"
+                    id="Gb" class="blackKey">
+                    <p class="keyLabel">Gb</p>
+                </div>
+                <div onmousedown="!is_iOS ? playKey(this.id) : null" onmouseup="!is_iOS ? stopKey(this.id) : null"
+                    id="Ab" class="blackKey">
+                    <p class="keyLabel">Ab</p>
+                </div>
+                <div onmousedown="!is_iOS ? playKey(this.id) : null" onmouseup="!is_iOS ? stopKey(this.id) : null"
+                    id="Bb" class="blackKey">
+                    <p class="keyLabel">Bb</p>
+                </div>
+                <div onmousedown="!is_iOS ? playKey(this.id) : null" onmouseup="!is_iOS ? stopKey(this.id) : null"
+                    id="Db1" class="blackKey">
+                    <p class="keyLabel">Db</p>
+                </div>
+                <div onmousedown="!is_iOS ? playKey(this.id) : null" onmouseup="!is_iOS ? stopKey(this.id) : null"
+                    id="Eb1" class="blackKey">
+                    <p class="keyLabel">Eb</p>
+                </div>
+
+                <div id="loadingDiv" className="loading">
+                    <h1>Loading sound...</h1>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- <script type="text/babel" src='index.jsx'></script> -->
+    <script src="app.js"></script>
 </body>
+
 </html>
