@@ -65,9 +65,9 @@ const is_iOS = (() => {
 	);
 })();
 
-if (is_iOS) {
-	obj.html5 = true;
-}
+// if (is_iOS) {
+// 	obj.html5 = true;
+// }
 
 let pointer = 0;
 const notesArray = [
