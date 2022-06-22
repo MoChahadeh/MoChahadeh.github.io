@@ -348,7 +348,7 @@ function stopKey(key2) {
     deHighlightKey(key2);
 
     if (!sustain) {
-      if (!is_iOS) {
+      if (!is_iOS || true) {
         sprite.fade(1, 0, Notedelay, associatedObj.soundId);
         sprite.on(
           "fade",
