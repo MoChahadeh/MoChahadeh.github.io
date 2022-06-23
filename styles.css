@@ -12,6 +12,14 @@
 	scroll-behavior: smooth;
 }
 
+html {
+	scroll-snap-type: mandatory;
+	scroll-snap-points-y: repeat(100vh);
+	scroll-snap-type: y mandatory;
+  }
+  
+
+
 a:hover {
 	text-decoration: none;
 }
@@ -125,6 +133,7 @@ body {
     background-color: var(--dark);
 	display: flex;
 	flex-direction: column;
+	scroll-snap-align: start;
 }
 
 
