@@ -32,13 +32,15 @@ class App extends React.Component {
 							<a onClick={() => this.setState({ choice: "newOnline", onlineGameRequestString: "newGame" })} className="playButton">
 							<h2>New Game</h2>
 							</a>
-							<a onClick={() => {this.showPrompt();this.setState({ choice: "joinOnline" });}} className="playButton">
+							<a onClick={this.showPrompt} className="playButton">
 								<h2>Join Game</h2>
 							</a>
 						</div>
 						}
 						
 				</div>
+
+				<a href="https://mochahadeh.github.io/" target="_blank" id="copyright">©2022 Mohamad Chahadeh</a>
 			</div>
 
 			) :
@@ -52,9 +54,12 @@ class App extends React.Component {
 	showPrompt = () => {
 		let gameId = prompt("Enter Game Id (Case sensitive): ");
 
-		this.setState({
-			onlineGameRequestString: `join/${gameId}`
-		})
+		if(gameId != null && gameId.length > 0) {
+			this.setState({
+				onlineGameRequestString: `join/${gameId}`,
+				choice: "joinOnline"
+			})
+		}
 	}
 }
 
