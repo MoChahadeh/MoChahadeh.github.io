@@ -74,8 +74,9 @@ class OnlineGame extends React.Component {
 
         return (
             !this.state.failedToConnect && this.state.player2 ? <div id="container">
-                <h4 id="gameIdText">{this.state.gameId}</h4>
+                <h4 id="currentMover">{this.state.isWhiteTurn ? "White" : "Black"} Moves</h4>
                 <OnlineBoard isWhite={this.state.isWhite} isWhiteTurn={this.state.isWhiteTurn} boardArray={this.state.history[this.state.history.length-1]} onSquareClicked={this.onSquareClicked} />
+                <h4 id="gameIdText">{this.state.gameId}</h4>
             </div> : (!this.state.player2 && !this.state.failedToConnect ? <p>Waiting for player 2.. GameID: {this.state.gameId}</p> : <p>Failed to connect</p>)
         )
     }
